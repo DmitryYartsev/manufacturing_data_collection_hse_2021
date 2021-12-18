@@ -1,0 +1,76 @@
+Tables
+
+operational_layer.products
+operational_layer.customers
+operational_layer.measurments
+
+
+dbname = 'plant_database'
+user = 'user'
+host = '172.27.0.2'
+password = "pass"
+port = 5432
+
+
+===========================
+
+TASK 1.1
+
+Select count(distinct("Location")) from operational_layer.customers
+
+Select distinct("Customer") 
+from operational_layer.customers 
+join operational_layer.measurments 
+on operational_layer.customers.id_customer=operational_layer.measurments.id_customer where "LightSen" between 4500 and 7000
+
+Select distinct("Customer") 
+from operational_layer.customers 
+where Lower("Customer") like '%lc%nc%'
+
+
+
+
+TASK 1.2
+
+Update operational_layer.products 
+set "Wi-Fi"='yes'  
+where "iOSapp"='yes';
+Select distinct(products."Wi-Fi") from operational_layer.products where "iOSapp"='yes';
+
+
+CREATE TABLE operational_layer.prices(
+   device_type varchar,
+   price numeric);
+Insert into  operational_layer.prices(device_type, price) values 
+    ('PLC', 1000), ('CNC', 10000), ('IOT', 100), ('Other', 100)
+Select * from operational_layer.prices
+
+
+
+Select t1."device_type", sum(price) as "sum_price" from 
+(Select Case 
+    When lower(t.cust) like '%cnc%' then 'CNC'
+    When lower(t.cust) like '%plc%' then 'PLC'
+    When lower(t.cust) like '%iot%' then 'IOT'
+    Else 'Other'
+END as "device_type"
+from 
+(Select distinct(operational_layer.customers."Customer") as cust from operational_layer.customers) as t) as t1
+join operational_layer.prices on t1.device_type=prices.device_type
+group by(t1."device_type")
+
+
+
+
+
+
+
+
+
+=============================
+
+select "MaxTemp", "MinHump" from 
+(select max("TempSen") as "MaxTemp",  1 as key from operational_layer.measurments) as t1
+ FULL OUTER JOIN 
+(select min("HumpSen") as "MinHump",  1 as key from operational_layer.measurments) as t2
+ON t1.key = t2.key
