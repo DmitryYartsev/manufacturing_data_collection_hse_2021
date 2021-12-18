@@ -12,13 +12,16 @@ Homework for task 2
   &ensp;Python (port - 8889)</br>
   &ensp;PgAdmin (port - 80)</br>
 
-  3) PostgreSQL credention: 
+3) PostgreSQL configs: 
   <br>dbname = 'plant_database' </br>
   user = 'user' </br>
   host = '172.27.0.2' </br>
   password = "pass" </br>
   port = 5432 </br>
-
+  
+  PgAdmin configs:
+  <br>email = 'mail@mail.ru' </br>
+  password = 'pass'</br>
 
 4) For task_1 you should connect PgAdmin to PostgreSQL and find SQL command in path python_server_docker/sql_commands 
 
